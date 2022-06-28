@@ -1,4 +1,20 @@
-# Simplified SAFE Stack
+# aws-lambda-fableremoting
+
+Repo derived from the simplified safe stack template but gives an example of AWS Lambda using Fable.Remoting instead of giraffe.
+
+Changed lambda template tests to match safe template api routes
+
+I have not included any deployment code but it's well documented how to deploy dotnet aws lambda functions.
+
+## Changes made
+
+Generated lambda example project with `dotnet new serverless.AspNetCoreWebAPI -lang F#`
+
+Copied appropriate files to this repo and changed to make it all work.
+
+---
+
+## Simplified SAFE Stack
 
 A lightweight alternative template to the full-fledged official [SAFE Template](https://github.com/SAFE-Stack/SAFE-template). Lowers the entry barrier by choosing the simplest possible opinionated defaults:
  - Nuget for package management

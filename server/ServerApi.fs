@@ -1,4 +1,4 @@
-﻿module Server
+﻿module ServerApi
 
 open Microsoft.Extensions.Logging
 open Microsoft.Extensions.Configuration

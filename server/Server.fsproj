@@ -3,18 +3,22 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
-    <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <!-- This property makes the build directory similar to a publish directory and helps the AWS .NET Lambda Mock Test Tool find project dependencies. -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="Env.fs" />
     <Compile Include="ServerApi.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="Startup.fs" />
+    <Compile Include="LambdaEntryPoint.fs" />
+    <Compile Include="LocalEntryPoint.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fable.Remoting.Giraffe" Version="4.10.0" />
+    <PackageReference Include="Fable.Remoting.AspNetCore" Version="2.29.0" />
     <PackageReference Include="Saturn" Version="0.14.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
@@ -27,5 +31,8 @@
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="4.7.2" />
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer" Version="7.2.0" />
+  </ItemGroup>
+  
 </Project>
