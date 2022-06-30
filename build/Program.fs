@@ -18,13 +18,13 @@ let client =  path [ solutionRoot; "client" ]
 let serverTests = path [ solutionRoot; "serverTests" ]
 let clientTests = path [ solutionRoot; "clientTests" ]
 let clientDist = path [ client; "dist" ]
-let dist = path [ solutionRoot; "dist" ]
-let clientOutput = path [ dist; "wwwroot" ]
+let serverDist = path [ server; "dist" ]
+// let clientOutput = path [ dist; "wwwroot" ]
 
 Target.create "Clean" <| fun _ ->
     // sometimes files are locked by VS for a bit, retry again until they can be deleted
     Retry.retry 5 <| fun _ -> Shell.deleteDirs [
-        dist
+        serverDist
         path [ server; "bin" ]
         path [ server; "obj" ]
         path [ serverTests; "bin" ]
@@ -77,20 +77,21 @@ Target.create "LiveClientTests" <| fun _ ->
     if exitCode <> 0 then failwith "Failed to run client tests"
 
 Target.create "Pack" <| fun _ ->
-    match Shell.Exec(Tools.dotnet, sprintf "publish --configuration Release --output %s" dist, server) with
+    match Shell.Exec(Tools.dotnet, sprintf "publish --configuration Release --output %s" serverDist, server) with
     | 0 ->
         let exitCode = Shell.Exec(Tools.npm, "run build", client)
         if exitCode <> 0 then failwith "Failed to build client"
-        Shell.copyDir clientOutput clientDist (fun file -> true)
+        // Shell.copyDir clientOutput clientDist (fun file -> true)
     | n ->
         failwith "Failed to publish server project"
 
 Target.create "PackNoTests" <| fun _ ->
-    match Shell.Exec(Tools.dotnet, sprintf "publish --configuration Release --output %s" dist, server) with
+    match Shell.Exec(Tools.dotnet, sprintf "publish --configuration Release --output %s" serverDist, server) with
     | 0 ->
         match Shell.Exec(Tools.npm, "run build", client) with
         | 0 ->
-            Shell.copyDir clientOutput clientDist (fun file -> true)
+            ()
+            // Shell.copyDir clientOutput clientDist (fun file -> true)
         | _ ->
             failwith "Failed to build the client project"
     | _ ->

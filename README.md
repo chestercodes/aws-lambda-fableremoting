@@ -4,13 +4,32 @@ Repo derived from the simplified safe stack template but gives an example of AWS
 
 Changed lambda template tests to match safe template api routes
 
-I have not included any deployment code but it's well documented how to deploy dotnet aws lambda functions.
+I have included a `deploy` project that uses aws cdk and deploys the project as a serverless app.
+
+To run and deploy this project (on mac/linux) you need to setup your AWS environment with credentials and then run:
+
+``` bash
+./build.sh PackNoTests
+cd deploy
+npm install
+npx cdk deploy
+```
+
+and then navigate to the url of the cloudfront instance
 
 ## Changes made
 
 Generated lambda example project with `dotnet new serverless.AspNetCoreWebAPI -lang F#`
 
 Copied appropriate files to this repo and changed to make it all work.
+
+Added `deploy` node project to deploy app.
+The interesting parts of this are the cloudfront setup and the api gateway resources that need to match the shared file routes.
+
+Hacked around to make the cloudfront -> api gateway -> lambda -> aspnet core -> fable.remoting work
+
+The readme below is from the simplified safe stack one.
+
 
 ---
 

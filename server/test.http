@@ -2,3 +2,28 @@
 GET http://localhost:5000/api/Counter
 
 ###
+
+POST http://localhost:5000/api/Print
+
+[
+    {
+        "value": "Hi there!"
+    }
+]
+###
+
+# deployed api gateway domain
+@domain = XXX.execute-api.eu-west-2.amazonaws.com
+
+GET https://{{domain}}/api/Counter
+
+###
+
+POST https://{{domain}}/api/Print
+
+[
+    {
+        "value": "Hi there!"
+    }
+]
+

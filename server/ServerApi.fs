@@ -10,11 +10,20 @@ type ServerApi(logger: ILogger<ServerApi>, config: IConfiguration) =
     member this.Counter() =
         async {
             logger.LogInformation("Executing {Function}", "counter")
-            do! Async.Sleep 1000
-            return { value = 10 }
+            let ret: Counter = { value = 10 }
+            return ret
+        }
+
+    member this.Print(toPrint: ToPrint) =
+        async {
+            logger.LogInformation("Executing {Function}", "print")
+            logger.LogInformation(sprintf "%s" toPrint.value)
+            let ret: PrintResult = { ok = true }
+            return ret
         }
 
     member this.Build() : IServerApi =
         {
             Counter = this.Counter
+            Print = this.Print
         }
